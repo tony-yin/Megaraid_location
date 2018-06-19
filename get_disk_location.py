@@ -32,9 +32,9 @@ def do_shell(cmd):
             proc.kill()
         except psutil.NoSuchProcess:
             pass
-    if p.returncode == 1:
-        print "Command {} exec error!".format(cmd)
-        sys.exit(0)
+    #if p.returncode == 1:
+    #    print "Command {} exec error!".format(cmd)
+    #    sys.exit(0)
     return output
 
 def get_raid_cards():
@@ -109,10 +109,9 @@ if __name__=="__main__":
         print "Valid parameter, disk not found in system!"
         sys.exit(0)
 
-    RaidCardModelMap = ['3008']
+    RaidCardModelMap = ['MegaRAID SAS-3 3108']
     pcipath = get_disk_pcipath(disk)
     busid = get_disk_raid_busid(pcipath)
-    targetid = get_disk_targetid(pcipath)
     raidcards = get_raid_cards()
     result = []
 
@@ -124,6 +123,7 @@ if __name__=="__main__":
             break
 
     if len(result) > 0:
+        targetid = get_disk_targetid(pcipath)
         location = get_disk_location(busid, targetid)
     else:
         location = None
